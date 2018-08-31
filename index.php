@@ -7,21 +7,16 @@ use \Psr\Http\Message\ResponseInterface as Response;
 // autoload
 require 'vendor/autoload.php';
 
+$config = include_once 'config/config.php';
+
 // slim app
-$app = new \Slim\App;
+$app = new \Slim\App(['settings' => $config]);
 
-// hit hi
-// callback, req, res, args (in url)
-$app->get('/hi/{name}/{extra}', function (Request $request, Response $response, array $args) {
-	// name
-	$name = $args['name'];
-	$extra = $args['extra'];
 
-	// get body and write
-	$res = $name. " | ". $extra;
-    $response->getBody()->write("Hello, $res");
 
-	// return res
+
+$app->get('/', function (Request $request, Response $response, array $args) {
+    $response->getBody()->write("Home page");
     return $response;
 });
 
