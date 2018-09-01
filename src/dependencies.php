@@ -4,6 +4,7 @@
 namespace Vault;
 
 require_once('Classes/MySQLClient.php');
+require_once('Classes/Util.php');
 
 // service container
 $container = $app->getContainer();
@@ -39,6 +40,13 @@ $container['logger'] = function ($c) {
 
 // we return the obj 
 $container['dbClient'] = function ($c) {
-	$client = \MySQLClient::getInstance()->getConnection();
+	$client = \Vault\MySQLClient::getInstance()->getConnection();
 	return $client;
 };
+
+
+$container['util'] = function ($c) {
+    $util = new \Vault\Util();
+    return $util;
+};
+

@@ -1,5 +1,7 @@
 <?php
 
+namespace Vault;
+
 class MySQLClient {
 	// database
 	private $_connection;
@@ -26,7 +28,7 @@ class MySQLClient {
 	// Constructor
 	private function __construct() {
 		try {
-            $this->_connection = new PDO("mysql:host=$this->_host;dbname=$this->_db", 
+            $this->_connection = new \PDO("mysql:host=$this->_host;dbname=$this->_db", 
             	"$this->_user", "$this->_pass");
 
         } catch (PdoException $e) {

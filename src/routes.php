@@ -33,7 +33,17 @@ $app->post('/uploadReal', function (Request $request, Response $response) {
 	// ok
     if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
 		// move file
-        $filename = moveUploadedFile($directory, $uploadedFile);
+        $filename = $this->util->moveUploadedFile($directory, $uploadedFile);
+		$content = file_get_contents($filename);	
+		$arr = str_getcsv($content);
+
+		// test
+		echo "<pre>";
+		var_dump($arr);
+		echo "</pre>";
+		die('die');
+
+
 		// result
         $response->write('uploaded ' . $filename . '<br/>');
     } else {
@@ -47,7 +57,7 @@ $app->post('/uploadReal', function (Request $request, Response $response) {
 
 });
 
-
+/*
 function moveUploadedFile($directory, UploadedFile $uploadedFile)
 {
 	// ext
@@ -57,5 +67,6 @@ function moveUploadedFile($directory, UploadedFile $uploadedFile)
 	// move file
     $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
 
-    return $filename;
+    return $directory . DIRECTORY_SEPARATOR . $filename;
 }
+*/
