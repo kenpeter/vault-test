@@ -7,10 +7,10 @@ class MySQLClient {
 	// this class instance	
 	private static $_instance;
 	
-	private $_host = "";
-	private $_user = "";
-	private $_pass = "";
-	private $_db = "";
+	private $_host = "localhost";
+	private $_user = "vault";
+	private $_pass = "vault";
+	private $_db = "vault";
 
 	/*
 	Get an instance of the Database
@@ -24,12 +24,7 @@ class MySQLClient {
 	}
 
 	// Constructor
-	private function __construct($host, $user, $pass, $db) {
-		$this->_host = $host;
-    	$this->_user = $user;
-    	$this->_pass = $pass;
-    	$this->_db = $db;
-
+	private function __construct() {
 		try {
             $this->_connection = new PDO("mysql:host=$this->_host;dbname=$this->_db", 
             	"$this->_user", "$this->_pass");

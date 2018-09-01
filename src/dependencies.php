@@ -3,7 +3,7 @@
 
 namespace Vault;
 
-require_once('Classes/MyMongoClient.php');
+require_once('Classes/MySQLClient.php');
 
 // service container
 $container = $app->getContainer();
@@ -36,7 +36,6 @@ $container['logger'] = function ($c) {
 
 // we return the obj 
 $container['dbClient'] = function ($c) {
-	$dbName = 'vault';
-	$client = \MyMongoClient::get();
+	$client = \MySQLClient::getInstance()->getConnection();
 	return $client;
 };
