@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS user (
+    id INT AUTO_INCREMENT,
+    firstName VARCHAR(255) NOT NULL,
+    lastName VARCHAR(255) NOT NULL,
+    gender VARCHAR(255) NOT NULL,
+    favActivity VARCHAR(255) NOT NULL,
+    birthday DATE,
+    PRIMARY KEY (id)
+)  ENGINE=INNODB;

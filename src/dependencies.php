@@ -1,10 +1,14 @@
 <?php
 // DIC configuration
 
-// container
+namespace Vault;
+
+require_once('Classes/MyMongoClient.php');
+
+// service container
 $container = $app->getContainer();
 
-// assign func to var 
+// render service 
 $container['renderer'] = function ($c) {
 	// $c is config
 
@@ -12,20 +16,27 @@ $container['renderer'] = function ($c) {
 
 	// new displayer
 	// with setting
-    return new Slim\Views\PhpRenderer($settings['template_path']);
+    return new \Slim\Views\PhpRenderer($settings['template_path']);
 };
 
-// monolog
+// return log obj 
 $container['logger'] = function ($c) {
 	// settings => logger => name 
     $settings = $c->get('settings')['logger'];
   	// logger 
-	$logger = new Monolog\Logger($settings['name']);
+	$logger = new \Monolog\Logger($settings['name']);
    
 	// processor 
-	$logger->pushProcessor(new Monolog\Processor\UidProcessor());
+	$logger->pushProcessor(new \Monolog\Processor\UidProcessor());
 	// handler, log path, debug level
-    $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
+    $logger->pushHandler(new \Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
 	// logger obj
     return $logger;
+};
+
+// we return the obj 
+$container['dbClient'] = function ($c) {
+	$dbName = 'vault';
+	$client = \MyMongoClient::get();
+	return $client;
 };

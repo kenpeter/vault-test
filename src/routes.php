@@ -8,9 +8,12 @@ use Slim\Http\Response;
 // {name}, var
 // [], optional
 $app->get('/[{name}]', function (Request $request, Response $response, array $args) {
-    // write to log 
+    // log serivce 
     $this->logger->info("Slim-Skeleton '/' route");
 
-    // response, html, args into it 
+	// test
+	$dbClient = $this->dbClient; 
+
+    // render service 
     return $this->renderer->render($response, 'index.phtml', $args);
 });
