@@ -8,6 +8,9 @@ require_once('Classes/MySQLClient.php');
 // service container
 $container = $app->getContainer();
 
+// upload
+$container['upload_directory'] = dirname( dirname(__FILE__) ). '/uploads';
+
 // render service 
 $container['renderer'] = function ($c) {
 	// $c is config
