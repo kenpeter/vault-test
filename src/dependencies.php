@@ -46,7 +46,8 @@ $container['dbClient'] = function ($c) {
 
 
 $container['util'] = function ($c) {
-    $util = new \Vault\Util();
+	$client = \Vault\MySQLClient::getInstance()->getConnection();
+    $util = new \Vault\Util($client);
     return $util;
 };
 

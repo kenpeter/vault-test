@@ -32,7 +32,7 @@ class MySQLClient {
             	"$this->_user", "$this->_pass");
 
         } catch (PdoException $e) {
-            echo 'Hata: '.$e->getMessage();
+            echo 'Data: '.$e->getMessage();
         }	
 	}
 

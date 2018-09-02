@@ -17,10 +17,8 @@ $app->get('/upload', function (Request $request, Response $response, array $args
     return $this->renderer->render($response, 'upload.phtml', $args);
 });
 
-// actual upload
+// in controller, we have diff services meet together 
 $app->post('/uploadReal', function (Request $request, Response $response) {
-    $dbClient = $this->dbClient;
-
 	// from index, actual dir 
 	$directory = $this->get('upload_directory');
 
@@ -34,18 +32,9 @@ $app->post('/uploadReal', function (Request $request, Response $response) {
     if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
 		// move file
         $filename = $this->util->moveUploadedFile($directory, $uploadedFile);
-		$content = file_get_contents($filename);	
-		$arr = str_getcsv($content);
+		$arr = $this->util->csvToArr($filename);
+		$condi = $this->util->insertData($arr);
 
-		// test
-		echo "<pre>";
-		var_dump($arr);
-		echo "</pre>";
-		die('die');
-
-
-		// result
-        $response->write('uploaded ' . $filename . '<br/>');
     } else {
 		// err
 		echo "<pre>";
@@ -57,16 +46,3 @@ $app->post('/uploadReal', function (Request $request, Response $response) {
 
 });
 
-/*
-function moveUploadedFile($directory, UploadedFile $uploadedFile)
-{
-	// ext
-    $path_parts = pathinfo($uploadedFile->getClientFilename());
-	$filename = $path_parts['filename']. '.'. $path_parts['extension'];
-
-	// move file
-    $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
-
-    return $directory . DIRECTORY_SEPARATOR . $filename;
-}
-*/
