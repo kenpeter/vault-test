@@ -20,6 +20,8 @@ $app->get('/api/users[/{currDate}[/{dateNum}]]', function (Request $request, Res
 	if(empty($args['currDate']) || empty($args['dateNum'])) {
 		$userArr = $this->util->getUsersAsArr(); 
 	} else {
+		$currDate = $args['currDate'];
+		$dateNum = $args['dateNum'];
 		$userArr = $this->util->getUsersFilter($currDate, $dateNum);
 	}
 	return $response->withJson($userArr);	
