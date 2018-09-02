@@ -71,15 +71,13 @@
          			type: 'GET',
          			success: function(data){ 
             			//console.log(data);
-						$("#dayTable tbody").remove();
+						$("#dayTable tbody").empty();
 
 						$.each(data, function (key, item) {
                         	items.push(buildItemRow(item));
                     	});
 				
-                    	$('<tbody/>', {
-                        	html: items.join('')
-                    	}).appendTo('thead');
+                    	$('tbody').append(items);
 					}
          		});
     		});			
