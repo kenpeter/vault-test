@@ -2,6 +2,8 @@
 
 namespace Vault;
 
+require_once('Sanitizer.php');
+
 class Util {
 
 	private $db;	
@@ -81,6 +83,7 @@ class Util {
 
 	public function insertData($arr) {
 		$this->purgeTable('user');
+		$san = new \Vault\Sanitizer();
 
 		foreach($arr as $k => $t) {
 			// ignore the csv names
@@ -88,16 +91,12 @@ class Util {
 				continue;
 			}
 
-			$firstName = $t[0];
-			$lastName = $t[1];
-			$gender = $t[2];
-			$favActivity = $t[3];
-			$birthday = $t[4];
+			$firstName = $san->destill($t[0]);
+			$lastName = $san->destill($t[1]);
+			$gender = $san->destill($t[2]);
+			$favActivity = $san->destill($t[3]);
+			$birthday = $san->destill($t[4]);
 	
-			// test
-			//$this->myvardump('-- so --');
-			//$this->myvardump($t);
-
 			$this->insertDataReal($firstName, $lastName, $gender, $favActivity, $birthday);
 		} // end loop
 
