@@ -13,10 +13,6 @@ $app->get('/', function (Request $request, Response $response, array $args) {
 
 // user api 
 $app->get('/api/users[/{currDate}[/{dateNum}]]', function (Request $request, Response $response, array $args) {
-	//$today = date('Y-m-d');
-	//$currDate = empty($args['currDate']) ? $today : $args['currDate'];
-	//$dateNum = empty($args['dateNum']) ? '30' : $args['dateNum']; 
-
 	if(empty($args['currDate']) || empty($args['dateNum'])) {
 		$userArr = $this->util->getUsersAsArr(); 
 	} else {
@@ -29,7 +25,6 @@ $app->get('/api/users[/{currDate}[/{dateNum}]]', function (Request $request, Res
 
 // upload page
 $app->get('/upload', function (Request $request, Response $response, array $args) {
-
     // render service 
     return $this->renderer->render($response, 'upload.phtml', $args);
 });
