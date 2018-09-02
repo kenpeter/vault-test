@@ -2,37 +2,41 @@
 <html>
     <head>
         <meta charset="utf-8"/>
-        <title>Slim 3</title>
+        <title>Home</title>
         <link href='//fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
-        <style>
-            body {
-                margin: 50px 0 0 0;
-                padding: 0;
-                width: 100%;
-                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-                text-align: center;
-                color: #aaa;
-                font-size: 18px;
-            }
+      	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-            h1 {
-                color: #719e40;
-                letter-spacing: -3px;
-                font-family: 'Lato', sans-serif;
-                font-size: 100px;
-                font-weight: 200;
-                margin-bottom: 0;
-            }
-        </style>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> 
     </head>
     <body>
-        <h1>Slim</h1>
-        <div>a microframework for PHP</div>
+		<p>Drop down</p>
 
-        <?php if (isset($name)) : ?>
-            <h2>Hello <?= htmlspecialchars($name); ?>!</h2>
+        <?php if (isset($userArr)) : ?>
+			<div class="table-responsive">
+				<table class="table">
+  					<thead>
+    					<tr>
+      						<th scope="col">#</th>
+      						<th scope="col">First</th>
+      						<th scope="col">Last</th>
+      						<th scope="col">Birthday</th>
+    					</tr>
+  					</thead>
+  					<tbody>
+						<?php foreach($userArr as $t): ?>
+						<tr>
+      						<td><?php echo $t['id'] ?></td>	
+      						<td><?php echo $t['firstName'] ?></td>
+      						<td><?php echo $t['lastName'] ?></td>
+      						<td><?php echo $t['birthday'] ?></td>
+    					</tr>
+						<?php endforeach; ?>
+  					</tbody>
+				</table>					
+			</div>
         <?php else: ?>
-            <p>Try <a href="http://www.slimframework.com">SlimFramework</a></p>
         <?php endif; ?>
     </body>
 </html>

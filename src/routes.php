@@ -5,17 +5,23 @@ use Slim\Http\Response;
 use Slim\Http\UploadedFile;
 
 $app->get('/', function (Request $request, Response $response, array $args) {
-    // render service 
-    return $this->renderer->render($response, 'index.phtml', $args);
+	$userArr = $this->util->getUsersAsArr();    
+	$args['userArr'] = $userArr;
+
+	return $this->renderer->render($response, 'index.phtml', $args);
 });
 
 // user api 
 $app->get('/api/users[/{currDate}[/{dateNum}]]', function (Request $request, Response $response, array $args) {
-	$today = date('Y-m-d');
-	$currDate = empty($args['currDate']) ? $today : $args['currDate'];
-	$dateNum = empty($args['dateNum']) ? '30' : $args['dateNum']; 
+	//$today = date('Y-m-d');
+	//$currDate = empty($args['currDate']) ? $today : $args['currDate'];
+	//$dateNum = empty($args['dateNum']) ? '30' : $args['dateNum']; 
 
-	$userArr = $this->util->getUsersFilter($currDate, $dateNum);
+	if(empty($args['currDate']) || empty($args['dateNum'])) {
+		$userArr = $this->util->getUsersAsArr(); 
+	} else {
+		$userArr = $this->util->getUsersFilter($currDate, $dateNum);
+	}
 	return $response->withJson($userArr);	
 });
 
