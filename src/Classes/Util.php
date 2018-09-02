@@ -127,11 +127,7 @@ class Util {
 
 		$startYear = date('Y', $startUnix);
 		$endYear = date('Y', $endUnix);
-		$userArr = $this->getUsersAsArrParam($startYear, $endYear, $startUnix, $endUnix);	
-
-		//test
-		$this->myvardump($userArr);
-		die;
+		return $userArr = $this->getUsersAsArrParam($startYear, $endYear, $startUnix, $endUnix);	
 	}
 
 
@@ -145,7 +141,7 @@ class Util {
 				$bDaySubUnix = strtotime($bDaySub);
 
 				if($bDaySubUnix >= $startUnix && $bDaySubUnix <= $endUnix) {
-					$buf[] = $bDay;
+					$buf[] = $user;
 				} else {
 					// ignore
 				}
@@ -161,11 +157,11 @@ class Util {
                 $bDaySub2Unix = strtotime($bDaySub2);               
 
                 if($bDaySub1Unix >= $startUnix && $bDaySub1Unix <= $endUnix) {
-                    $buf[] = $bDay;
+                    $buf[] = $user;
 					continue;
 				}
 				else if($bDaySub2Unix >= $startUnix && $bDaySub2Unix <= $endUnix) {
-					$buf[] = $bDay;
+					$buf[] = $user;
                     continue;
                 } 
 				else {
