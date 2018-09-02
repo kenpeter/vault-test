@@ -118,11 +118,45 @@ class Util {
 		return $buf;	
 	}
 
-	
-	public function getUsers($currDate, $dateNum) {
 
+	// e.g. currDate = 2018-09-02
+	// Assume dateNum e.g. 30, 60, 90 days
+	public function getUsersFilter($currDate, $dateNum) {
+		$startUnix = strtotime($currDate);
+		$endUnix = $startUnix + $dateNum * 60 * 60 * 24;
 
+		$startYear = date('Y', $startUnix);
+		$endYear = date('Y', $endUnix);
+		if($startYear == $endYear) {
+			// sub year for b day
+			
+		} else {
+			// sub start year and end year for b day
+			
+		}		
+
+		$userArr = $this->getUsersAsArr();
+
+		//test
+		$this->myvardump($userArr);
+		die;
 	}
+
+	public function getUsersAsArr() {
+		$db = $this->db;
+
+		$sql = "select * from user";	
+		try {
+            $stmt = $db->prepare($sql);
+            $stmt->execute();
+			$res = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+			return $res;
+        }   
+        catch(\Exception $e) {
+            throw new Exception($e->getMessage());
+        }	
+	}
+
 
 	public function myvardump($input) {
 		echo "<pre>";

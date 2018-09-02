@@ -15,7 +15,7 @@ $app->get('/api/users[/{currDate}[/{dateNum}]]', function (Request $request, Res
 	$currDate = empty($args['currDate']) ? $today : $args['currDate'];
 	$dateNum = empty($args['dateNum']) ? '30' : $args['dateNum']; 
 
-	$userArr = $this->util->getUsers($currDate, $dateNum);
+	$userArr = $this->util->getUsersFilter($currDate, $dateNum);
 });
 
 // upload page
