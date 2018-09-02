@@ -127,20 +127,56 @@ class Util {
 
 		$startYear = date('Y', $startUnix);
 		$endYear = date('Y', $endUnix);
-		if($startYear == $endYear) {
-			// sub year for b day
-			
-		} else {
-			// sub start year and end year for b day
-			
-		}		
-
-		$userArr = $this->getUsersAsArr();
+		$userArr = $this->getUsersAsArrParam($startYear, $endYear, $startUnix, $endUnix);	
 
 		//test
 		$this->myvardump($userArr);
 		die;
 	}
+
+
+	public function getUsersAsArrParam($startYear, $endYear, $startUnix, $endUnix) {
+		$allUserArr = $this->getUsersAsArr();
+		$buf = [];
+		if($endYear == $startYear) {
+			foreach($allUserArr as $user) {
+				$bDay = $user['birthday'];
+				$bDaySub = $startYear. '-'. date('m-d', strtotime($bDay));			
+				$bDaySubUnix = strtotime($bDaySub);
+
+				if($bDaySubUnix >= $startUnix && $bDaySubUnix <= $endUnix) {
+					$buf[] = $bDay;
+				} else {
+					// ignore
+				}
+			} // end loop
+		} else {
+			foreach($allUserArr as $user) {
+                $bDay = $user['birthday'];
+
+                $bDaySub1 = $startYear. '-'. date('m-d', strtotime($bDay));
+                $bDaySub1Unix = strtotime($bDaySub1);
+				
+				$bDaySub2 = $endYear. '-'. date('m-d', strtotime($bDay));
+                $bDaySub2Unix = strtotime($bDaySub2);               
+
+                if($bDaySub1Unix >= $startUnix && $bDaySub1Unix <= $endUnix) {
+                    $buf[] = $bDay;
+					continue;
+				}
+				else if($bDaySub2Unix >= $startUnix && $bDaySub2Unix <= $endUnix) {
+					$buf[] = $bDay;
+                    continue;
+                } 
+				else {
+
+                }
+            } // end loop
+		}
+
+		return $buf;
+	}
+
 
 	public function getUsersAsArr() {
 		$db = $this->db;
