@@ -3,6 +3,7 @@
 namespace Vault;
 
 require_once('Sanitizer.php');
+require_once('Validator.php');
 
 class Util {
 
@@ -84,6 +85,7 @@ class Util {
 	public function insertData($arr) {
 		$this->purgeTable('user');
 		$san = new \Vault\Sanitizer();
+		$val = new \Vault\Validator();
 
 		foreach($arr as $k => $t) {
 			// ignore the csv names
@@ -96,6 +98,15 @@ class Util {
 			$gender = $san->destill($t[2]);
 			$favActivity = $san->destill($t[3]);
 			$birthday = $san->destill($t[4]);
+
+			if(
+				$val->isFieldEmpty($firstName) ||
+				$val->isFieldEmpty($lastName) ||
+				$val->isFieldEmpty($gender) ||
+                $val->isFieldEmpty($favActivity) ||
+				$val->isFieldEmpty($birthday)
+			)
+				continue;
 	
 			$this->insertDataReal($firstName, $lastName, $gender, $favActivity, $birthday);
 		} // end loop
