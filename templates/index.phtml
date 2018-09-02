@@ -25,7 +25,7 @@
 
         <?php if (isset($userArr)) : ?>
 			<div class="table-responsive">
-				<table class="table">
+				<table class="table" id="dayTable">
   					<thead>
     					<tr>
       						<th scope="col">#</th>
@@ -56,19 +56,45 @@
      			var dayNum = $('#dayDropDown').find(":selected").val();
 				var currDate = new Date();
 				currDate = currDate.format('Y-m-d');
-				var url = '/api/users/' + currDate + '/' + dayNum;
 
-				console.log(url);
- 
+				var url;
+				if(dayNum == 'all') {
+					url = '/api/users';
+				} else { 
+					url = '/api/users/' + currDate + '/' + dayNum;
+				}
+				var items = [];
+			
      			$.ajax({
          			url: url,
          			cache: false,
          			type: 'GET',
          			success: function(data){ 
-            			console.log(data);
+            			//console.log(data);
+						$("#dayTable tbody").remove();
+
+						$.each(data, function (key, item) {
+                        	items.push(buildItemRow(item));
+                    	});
+				
+                    	$('<tbody/>', {
+                        	html: items.join('')
+                    	}).appendTo('thead');
 					}
          		});
-    		});
+    		});			
 		});
+
+		function buildItemRow(item) {
+			var html = 
+				'<tr>' +
+					'<td>' + item.id + '</td>' +  
+					'<td>' + item.firstName + '</td>' +				
+					'<td>' + item.lastName + '</td>' +
+					'<td>' + item.birthday + '</td>' +	
+				'</tr>';
+
+			return html;	
+		}
 	</script>
 </html>
