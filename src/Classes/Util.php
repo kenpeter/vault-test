@@ -27,6 +27,7 @@ class Util {
 		
 		$sql = "TRUNCATE TABLE $name";
 		try {
+			// not statement
 			$db->exec($sql);
 		}
 		catch(\Exception $e) {
@@ -94,11 +95,14 @@ class Util {
 			$birthday = $t[4];
 	
 			// test
-			$this->myvardump('-- so --');
-			$this->myvardump($t);
+			//$this->myvardump('-- so --');
+			//$this->myvardump($t);
 
 			$this->insertDataReal($firstName, $lastName, $gender, $favActivity, $birthday);
 		} // end loop
+
+		// redirect
+		
 	}
 
 	public function csvToArr($filename) {
@@ -112,6 +116,12 @@ class Util {
 		}
 
 		return $buf;	
+	}
+
+	
+	public function getUsers($currDate, $dateNum) {
+
+
 	}
 
 	public function myvardump($input) {

@@ -9,6 +9,14 @@ $app->get('/', function (Request $request, Response $response, array $args) {
     return $this->renderer->render($response, 'index.phtml', $args);
 });
 
+// user api 
+$app->get('/api/users[/{currDate}[/{dateNum}]]', function (Request $request, Response $response, array $args) {
+	$today = date('Y-m-d');
+	$currDate = empty($args['currDate']) ? $today : $args['currDate'];
+	$dateNum = empty($args['dateNum']) ? '30' : $args['dateNum']; 
+
+	$userArr = $this->util->getUsers($currDate, $dateNum);
+});
 
 // upload page
 $app->get('/upload', function (Request $request, Response $response, array $args) {
@@ -18,7 +26,7 @@ $app->get('/upload', function (Request $request, Response $response, array $args
 });
 
 // in controller, we have diff services meet together 
-$app->post('/uploadReal', function (Request $request, Response $response) {
+$app->post('/uploadReal', function (Request $request, Response $response) use ($app) {
 	// from index, actual dir 
 	$directory = $this->get('upload_directory');
 
@@ -34,7 +42,7 @@ $app->post('/uploadReal', function (Request $request, Response $response) {
         $filename = $this->util->moveUploadedFile($directory, $uploadedFile);
 		$arr = $this->util->csvToArr($filename);
 		$condi = $this->util->insertData($arr);
-
+		return $response->withRedirect('/', 301);	
     } else {
 		// err
 		echo "<pre>";
@@ -42,7 +50,5 @@ $app->post('/uploadReal', function (Request $request, Response $response) {
 		echo "</pre>";
 		die('die');
 	}
-
-
 });
 
